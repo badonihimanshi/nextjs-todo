@@ -1,67 +1,107 @@
-"use client"
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import React from 'react'
-import Home from '../home/page'
+"use client";
+
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import {
+  Container,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  IconButton,
+  Box,
+  colors,
+} from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { lightBlue, pink ,amber,lavender} from "@mui/material/colors";
+// import { light } from "@mui/material/styles/createPalette";
 
 const Todo = () => {
   const [todos, setTodos] = useState([]);
-  // const[newTodo, setNewTodo]= useState("")
-
-  //  useEffect(() => {
-  //   const fetchTodos = async () => {
-  //     const res = await fetch("/api/add");
-  //     const data = await res.json();
-  //     setTodos(data);
-  //     console.log(data);
-  //   };
-  //   fetchTodos();
-  // }, []);
-
 
   useEffect(() => {
-    const getTodos = async () => {
-      const res = await fetch("https://jsonplaceholder.typicode.com/todos");
-      const data = await res.json();
-      setTodos(data);
-      console.log(data);
-    };
-    getTodos();
+    const savedTodos = JSON.parse(localStorage.getItem("todos")) || [];
+    setTodos(savedTodos);
   }, []);
 
+  // Save todos to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
+
+  // Fetch all the todo List
+  useEffect(() => {
+    const fetchTodos = async () => {
+      const res = await fetch("/api/add");
+      const data = await res.json();
+      setTodos(data); // data is array, set directly
+    };
+    fetchTodos();
+  }, []);
+
+  const handleDelete = async (id) => {
+    let res = await fetch("/api/add", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id }),
+    });
+    const data = await res.json();
+    setTodos(data.todos);
+    console.log("deleted");
+  };
+
   return (
-    <div>
-      <div className="todos">
-        <div className="todo flex m-2">
-          <ul>
+    <Container maxWidth="md" sx={{ mt: 5,mb:3,  height:"80vh"}}>
+      <Box sx={{ p: 3, bgcolor: "lavender", borderRadius: 2, height:"90vh"}}>
+
+    {/* <Container maxWidth="sm" sx={{ mt: 4}} > */}
+      <Typography variant="h4" color="primary" align="center" gutterBottom>
+        Todo List
+      </Typography>
+
+      <Box
+      bgcolor={"pink"}
+      //  sx={{bgcolor:"violet[100]"}}
+      >
+
+      
+      <List >
+        {todos.map((todo) => (
+          <ListItem
           
+            key={todo.id}
+            secondaryAction={
+              <Box>
+                {/* Edit Button with Link */}
+                <IconButton
+                  component={Link}
+                  href={`/Edit/${todo.id}`}
+                  edge="end"
+                  sx={{ mr: 1 }}
+                >
+                  <EditIcon />
+                </IconButton>
 
-            {todos.slice(0, 5).map((todo) => (
-              <li className="flex justify-between items-center p-2"
-              key={todo.id}>{todo.title}
+                {/* Delete Button */}
+                <IconButton
+                  edge="end"
+                  color="error"
+                  onClick={() => handleDelete(todo.id)}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </Box>
+            }
+          >
+            <ListItemText primary={todo.title} />
+          </ListItem>
+        ))}
+      </List>
+      </Box>
+      </Box>
+    </Container>
+  );
+};
 
-                <div className="buttons flex">
-                  <button className='bg-violet-800 hover:bg-violet-950 p-1 py-1 text-sm font-bold text-white rounded-md mx-1'>
-                    <Link href={"/Edit"}>
-                      Edit
-                    </Link>
-                  </button>
-
-                  <button className='bg-violet-800 hover:bg-violet-950 p-1 py-1 text-sm font-bold text-white rounded-md mx-1'>
-                    Delete
-                  </button>
-
-                </div>
-              </li>
-
-            ))}
-
-          </ul>
-        </div>
-      </div>
-      {/*  */}
-    </div>
-  )
-}
-
-export default Todo
+export default Todo;

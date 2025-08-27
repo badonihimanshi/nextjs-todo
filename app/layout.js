@@ -1,6 +1,12 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Todo/Navbar";
+import Providers from "@/components/Todo/Providers";
+import Footer from "@/components/Todo/Footer";
+// import { Box } from "@mui/material";
+// import { ThemeProvider } from '@mui/material/styles';
+// import CssBaseline from '@mui/material/CssBaseline';
+// import theme from '@/theme';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,19 +26,32 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      {/* <head>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        />
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
+      </head> */}
 
-    
+
+
+
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
 
         <header>
-          <Navbar/>
+          <Navbar />
         </header>
-        <main>{children}</main>
+        <main>
+          <Providers>{children}</Providers>
+        </main>
+        
         <footer className="bg-slate-50 w-full">
-          footer
+          <Footer/>
         </footer>
+         
       </body>
-     
+
     </html>
   );
 }

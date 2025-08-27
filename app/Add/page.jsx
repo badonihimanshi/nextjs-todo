@@ -1,62 +1,54 @@
 "use client"
-import { useState, useEffect} from 'react'
-import React from 'react'
-import Link from 'next/link'
-import {setTodos,todos} from '../Todo/page'
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+// Import MUI components
+import { Container, TextField, Button, Typography, Box } from "@mui/material";
+import { blueGrey } from "@mui/material/colors";
 
 const Add = () => {
+  const [newTodo, setNewTodo] = useState("");
+  const router = useRouter();
 
-  //  const [todos, setTodos] = useState([]);
-  //   const[newTodo, setNewTodo]= useState("")
-  
-  //    useEffect(() => {
-  //     const fetchTodos = async () => {
-  //       const res = await fetch("/api/add");
-  //       const data = await res.json();
-  //       setTodos(data);
-  //       console.log(data);
-  //     };
-  //     fetchTodos();
-  //   }, []);
-
-  const addTodo= async()=>{
-    let data={
-      name: "himanshi",
-      role:"code"
-    }
-    let a = await fetch("/api/add",{
-      method:"POST", headers :{
-        "content-type":"application/json",
+  // SEND POST API
+  const addTodo = async () => {
+    if (!newTodo.trim()) return; // prevent empty input
+    let a = await fetch("/api/add", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
       },
-      body:JSON.stringify({data}),
-    })
-    let res = await a.json()
-    // setTodos([...todos,data])
-    // setNewTodo("")
-    console.log(res)
-  }
+      body: JSON.stringify({ title: newTodo }),
+    });
+    let res = await a.json();
+    setNewTodo(""); // clear input
+    router.push("/home"); // go back to home after adding
+    console.log(res);
+  };
+
   return (
-      <div className="container mx-auto my-5 rounded-xl p-5 bg-violet-100 min-h-[80vh]">
-      <div className="addTodo my-5">
+    <Container maxWidth="md" sx={{ mt: 5,  height:"100vh"}}>
+      <Box sx={{ p: 3, bgcolor: "lavender", borderRadius: 2, height:"90vh"}}>
+        <Typography variant="h5"  gutterBottom>
+          Add a Todo
+        </Typography>
 
-        <h2 className='text-lg font-bold'>Add a Todo</h2>
-
-        <input 
-          type='text'
-          // value={newTodo}
-          // onChange={(e)=> setNewTodo(e.target.value)}
-          className='w-1/2 bg-amber-50' 
+        {/* Material UI TextField instead of input */}
+        <TextField
+          fullWidth
+          label="Write your todo"
+          value={newTodo}
+          onChange={(e) => setNewTodo(e.target.value)}
+          sx={{ mb: 2 }}
         />
 
-        <button className='bg-violet-800 hover:bg-violet-950 p-2 py-1 text-sm font-bold text-white rounded-md mx-6'
-        onClick={addTodo} 
-        >
-          <Link href={"/home"}>Add</Link>
-        </button>
-      </div>
-      
-    </div>
-  )
-}
+        {/* Material UI Button instead of HTML button */}
+        <Button variant="contained" color="primary" onClick={addTodo}>
+          Add
+        </Button>
+      </Box>
+    </Container>
+  );
+};
 
-export default Add
+export default Add;
