@@ -7,6 +7,7 @@ import Footer from "@/components/Todo/Footer";
 // import { ThemeProvider } from '@mui/material/styles';
 // import CssBaseline from '@mui/material/CssBaseline';
 // import theme from '@/theme';
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,14 +28,18 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-K3DXL0YBDR"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', 'G-K3DXL0YBDR');
-        </script>
+         <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-K3DXL0YBDR"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-K3DXL0YBDR');
+          `}
+        </Script>
 
       </head>
 
