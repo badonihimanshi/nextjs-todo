@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 const Navbar = () => {
   return (
-    <nav className='flex justify-between bg-indigo-800 text-white py-2'>
+    <nav className='flex justify-between bg-[#af7eec] text-white py-2 ,mb-0'>
       <div className="logo">
         <span className='font-bold text-xl mx-8'>DoIt</span>
       </div>

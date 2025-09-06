@@ -26,13 +26,17 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      {/* <head>
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/icon?family=Material+Icons"
-        />
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
-      </head> */}
+      <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-K3DXL0YBDR"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-K3DXL0YBDR');
+        </script>
+
+      </head>
 
 
 
@@ -45,11 +49,11 @@ export default function RootLayout({ children }) {
         <main>
           <Providers>{children}</Providers>
         </main>
-        
+
         <footer className="bg-slate-50 w-full">
-          <Footer/>
+          <Footer />
         </footer>
-         
+
       </body>
 
     </html>

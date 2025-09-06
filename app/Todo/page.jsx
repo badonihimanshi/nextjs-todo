@@ -52,8 +52,9 @@ const Todo = () => {
   };
 
   return (
-    <Container maxWidth="md" sx={{ mt: 5,mb:3,  height:"80vh"}}>
-      <Box sx={{ p: 3, bgcolor: "lavender", borderRadius: 2, height:"90vh"}}>
+
+    <Container maxWidth="md" sx={{ mt: 0,mb:0,  height:"80vh"}}>
+      <Box sx={{ mt:4, bgcolor: "white", borderRadius: 2, height:"85vh", p:"10px"}}>
 
     {/* <Container maxWidth="sm" sx={{ mt: 4}} > */}
       <Typography variant="h4" color="primary" align="center" gutterBottom>
@@ -61,12 +62,12 @@ const Todo = () => {
       </Typography>
 
       <Box
-      bgcolor={"pink"}
-      //  sx={{bgcolor:"violet[100]"}}
+      
+       sx={{bgcolor:"[#af7eec] "}}
       >
 
       
-      <List >
+      <List  bgcolor="button">
         {todos.map((todo) => (
           <ListItem
           
@@ -101,7 +102,9 @@ const Todo = () => {
       </Box>
       </Box>
     </Container>
+   
   );
+ 
 };
 
 export default Todo;

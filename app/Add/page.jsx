@@ -43,7 +43,7 @@ const Add = () => {
         />
 
         {/* Material UI Button instead of HTML button */}
-        <Button variant="contained" color="primary" onClick={addTodo}>
+        <Button variant="contained" color="button" onClick={addTodo}>
           Add
         </Button>
       </Box>

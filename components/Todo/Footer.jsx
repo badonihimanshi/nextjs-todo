@@ -9,7 +9,7 @@ const Footer = () => {
         bgcolor:"primary.main",
         color: "white",
         py:2,
-        mt: 7,
+        mt: 0,
         textAlign:"center",
         height:"10vh"
 
